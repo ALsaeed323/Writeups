@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Write‑Ups Hub — Personal Blog</title>
+  <meta name="description" content="A clean, elegant hub to showcase my security write‑ups, CTF solutions, research notes, and posts." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* -------- Base + Variables -------- */
+    :root{
+      --bg: #0b1020;            /* page background */
+      --bg-elev: #11162a;       /* elevated surfaces */
+      --text: #e9edf8;          /* primary text */
+      --muted: #a7b0c4;         /* muted text */
+      --brand-1: #7c3aed;       /* accent */
+      --brand-2: #06b6d4;       /* accent secondary */
+      --ring: #94a3b8;          /* focus ring */
+      --card: rgba(255,255,255,0.06);
+      --card-hover: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(2,8,23,.35);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-lg: 28px;
+      --maxw: 1200px;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.15), transparent 60%),
+        radial-gradient(800px 400px at 90% 10%, rgba(6,182,212,.12), transparent 55%),
+        radial-gradient(600px 600px at 50% -20%, rgba(255,255,255,.05), transparent 65%),
+        var(--bg);
+      color: var(--text);
+      letter-spacing: 0.1px;
+    }
+    a{ color: inherit; text-decoration: none; }
+    img{ max-width:100%; display:block; }
+    .container{ width:100%; max-width: var(--maxw); margin: 0 auto; padding: 24px; }
+
+    /* -------- Header / Hero -------- */
+    header{
+      position: sticky; top:0; z-index:50; backdrop-filter: saturate(140%) blur(8px);
+      background: linear-gradient( to bottom, rgba(11,16,32,.92), rgba(11,16,32,.72));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:18px; padding: 14px 24px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px; }
+    .logo{ width:36px; height:36px; border-radius:12px; background: conic-gradient(from 230deg at 50% 50%, var(--brand-1), var(--brand-2)); box-shadow: inset 0 0 20px rgba(255,255,255,.18), 0 4px 18px rgba(124,58,237,.35); }
+    .brand span{ font-size: 18px; }
+    .actions{ display:flex; align-items:center; gap:10px; }
+    .btn{ display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius: 999px; background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.08); transition:.2s ease; cursor:pointer; }
+    .btn:hover{ background: var(--card-hover); transform: translateY(-1px); }
+    .btn .icon{ width:18px; height:18px; opacity:.9; }
+
+    .hero{ padding: 32px 24px 8px 24px; }
+    .hero-wrap{ display:grid; grid-template-columns: 1.2fr .8fr; gap:28px; align-items:center; }
+    .hero h1{ font-size: clamp(28px, 5vw, 46px); margin: 0 0 10px; line-height:1.05; }
+    .hero p{ margin: 0; color: var(--muted); font-size: clamp(14px, 2vw, 16px);
+    }
+    .hero-card{ border-radius: var(--radius-lg); padding:24px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); }
+    .stats{ display:flex; gap:18px; margin-top:16px; }
+    .chip{ padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.06); font-size: 13px; color: #d7def1; border: 1px solid rgba(255,255,255,.08); }
+
+    /* -------- Controls -------- */
+    .controls{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin: 18px 0 10px; }
+    .search{ flex:1; min-width: 240px; position:relative; }
+    .search input{ width:100%; padding:12px 40px 12px 42px; border-radius: 12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color: var(--text); outline:none; }
+    .search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:.8; }
+    .select{ padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color: var(--text); }
+    .tags{ display:flex; gap:10px; overflow:auto; padding-bottom:6px; }
+    .tag{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); white-space:nowrap; font-size:13px; cursor:pointer; transition:.2s; }
+    .tag.active{ background: linear-gradient(90deg, rgba(124,58,237,.22), rgba(6,182,212,.22)); border-color: rgba(255,255,255,.22); }
+
+    /* -------- Grid -------- */
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; margin: 16px 0 60px; }
+    .card{ grid-column: span 4; border-radius: var(--radius); overflow:hidden; border: 1px solid rgba(255,255,255,.08); background: var(--card); transition: transform .18s ease, background .18s ease, box-shadow .18s ease; display:flex; flex-direction:column; min-height: 320px; }
+    .card:hover{ transform: translateY(-3px); background: var(--card-hover); box-shadow: var(--shadow); }
+    .cover{ position:relative; height: 160px; overflow:hidden; }
+    .cover img{ width:100%; height:100%; object-fit: cover; filter: saturate(1.1) contrast(1.05); }
+    .cover .badge{ position:absolute; left:12px; top:12px; }
+    .content{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .title{ font-weight: 700; font-size: 18px; line-height: 1.2; }
+    .meta{ display:flex; gap:12px; flex-wrap:wrap; color: var(--muted); font-size: 13px; }
+    .summary{ color: #dbe5ff; opacity:.92; font-size: 14px; }
+    .card .inline-tags{ display:flex; gap:8px; flex-wrap:wrap; }
+    .inline-tags .chip{ background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); }
+    .footer{ margin-top:auto; padding:14px 16px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+
+    /* -------- Footer -------- */
+    footer{ border-top: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); }
+    .footer-inner{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding: 20px 24px; color: var(--muted); }
+
+    /* -------- Utilities -------- */
+    .hide{ display:none !important; }
+    .badge{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius: 999px; background: rgba(6,182,212,.18); border:1px solid rgba(255,255,255,.12); font-size:12px; color:#ccf2ff }
+    .badge svg{ width:14px; height:14px; }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); padding: 2px 6px; border-radius:6px; }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 1100px){ .card{ grid-column: span 6; } .hero-wrap{ grid-template-columns:1fr; } }
+    @media (max-width: 640px){ .card{ grid-column: span 12; } .actions .btn{ padding:8px 12px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav container">
+      <a class="brand" href="#" aria-label="Home">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Write‑Ups Hub</span>
+      </a>
+      <div class="actions">
+        <button id="toggleTheme" class="btn" title="Toggle theme (T)">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <span>Theme</span>
+        </button>
+        <a class="btn" href="#about" title="About">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
+          <span>About</span>
+        </a>
+        <a class="btn" href="#rss" title="RSS (coming soon)">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          <span>RSS</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero container">
+      <div class="hero-wrap">
+        <div class="hero-card">
+          <h1>All my write‑ups, in one beautiful place.</h1>
+          <p>CTFs, web & mobile pentesting notes, research snippets, and longer posts. Search, filter by tags, and sort by date or popularity.</p>
+          <div class="stats">
+            <span class="chip" id="countPosts">0 posts</span>
+            <span class="chip">Press <span class="kbd">/</span> to search</span>
+            <span class="chip">Press <span class="kbd">T</span> for theme</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="controls">
+            <div class="search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="search" placeholder="Search title, tags, or summary…" spellcheck="false" aria-label="Search posts" />
+            </div>
+            <select id="sort" class="select" aria-label="Sort posts">
+              <option value="new">Newest</option>
+              <option value="old">Oldest</option>
+              <option value="alpha">A → Z</option>
+              <option value="popular">Most Popular</option>
+            </select>
+            <button id="viewCards" class="btn" title="Card view">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Cards
+            </button>
+            <button id="viewList" class="btn" title="List view">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="3" cy="6" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="18" r="1"/></svg>
+              List
+            </button>
+          </div>
+          <div class="tags" id="tags"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <noscript><p style="color:#ffccd5">This page needs JavaScript enabled to show and filter posts.</p></noscript>
+    <section id="grid" class="grid" aria-live="polite"></section>
+
+    <section id="about" class="hero-card" style="margin-bottom: 60px;">
+      <h2 style="margin-top:0">About This Blog</h2>
+      <p style="color:var(--muted)">Welcome! This is a lightweight static blog built with plain HTML/CSS/JS. It’s intentionally framework‑free so you can deploy it anywhere (GitHub Pages, Netlify, Vercel, or any static server). Add or edit posts in the <strong>posts</strong> array inside this file, or point it to a <code>posts.json</code> file later.</p>
+      <ul style="line-height:1.9; color:#d9e3ff">
+        <li><strong>Search</strong> across titles, summaries, and tags.</li>
+        <li><strong>Filters</strong> by tag(s) with multi‑select behavior.</li>
+        <li><strong>Views</strong> switch between cards and list.</li>
+        <li><strong>Theme</strong> toggle with preference stored locally.</li>
+      </ul>
+      <p style="color:var(--muted)">Tip: Replace the placeholder links with your GitHub/Notion/Medium URLs. You can also host the write‑ups as Markdown in a <code>/posts/</code> folder and link directly.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner container">
+      <span>© <span id="year"></span> Your Name. All rights reserved.</span>
+      <div style="display:flex; gap:10px; align-items:center">
+        <a class="btn" href="mailto:you@example.com" title="Email">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+          Contact
+        </a>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.75.09-.74.09-.74 1.21.08 1.85 1.24 1.85 1.24 1.08 1.84 2.82 1.31 3.5 1 .11-.8.43-1.31.78-1.61-2.66-.3-5.46-1.33-5.46-5.92 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.64.24 2.86.12 3.16.77.84 1.24 1.9 1.24 3.22 0 4.6-2.8 5.61-5.47 5.91.44.38.83 1.11.83 2.24v3.32c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================= TEMPLATE ======================= -->
+  <template id="cardTpl">
+    <article class="card">
+      <a class="cover" data-href target="_blank" rel="noopener">
+        <img data-cover alt="Cover image" loading="lazy" />
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-8"/></svg><span data-badge>New</span></span>
+      </a>
+      <div class="content">
+        <a class="title" data-href target="_blank" rel="noopener" data-title>Post title</a>
+        <div class="meta"><span data-date>2025‑08‑20</span><span>•</span><span data-read>5 min</span><span class="hide" data-views>• 0 views</span></div>
+        <p class="summary" data-summary>Summary goes here.</p>
+        <div class="inline-tags" data-inline-tags></div>
+      </div>
+      <div class="footer">
+        <a class="btn" data-href target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+          Read write‑up
+        </a>
+        <button class="btn" data-share>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>
+          Share
+        </button>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    /* ==========================================================
+       HOW TO ADD YOUR POSTS
+       ----------------------------------------------------------
+       1) Duplicate an object in the posts array below.
+       2) Fill in: title, date (YYYY-MM-DD), url, summary, tags, cover.
+       3) Optional: readMins, views, pinned.
+       4) Save & deploy!
+       
+       TIP: You can move this array to /posts.json and fetch it instead.
+       ========================================================== */
+
+    const posts = [
+      {
+        title: "Android Pentesting Challenges on Allsafe (Mobile)",
+        date: "2025-08-25",
+        url: "https://alsaeed323.github.io/Allsafe-Android-App/",
+        summary: "19 hands-on Android labs: insecure logging, hardcoded creds, Firebase misconfig, SharedPreferences leaks, SQLi, PIN/Root/FLAG_SECURE bypass, deep link abuse, exported receiver, WebView file://, SSL pinning bypass, weak crypto, native libs & smali patches.",
+        tags: ["Android", "CTF", "Allsafe", "Pentesting"],
+        cover: "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?q=80&w=1400&auto=format&fit=crop",
+        readMins: 12,
+        views: 0,
+        pinned: true
+      },
+      {
+        title: "ASCWG 2025 — Unlock the Myth (Mobile)",
+        date: "2025-08-25",
+        url: "https://alsaeed323.github.io/Myth-challenge/",
+        summary: "Bypass anti-tooling and a native time+location gate in libvault.so; defang exit paths, spoof GPS/time at Java layer, then capture the XOR‑built flag from getFlag().",
+        tags: ["Android", "Reverse", "Frida", "Native", "ASCWG 2025"],
+        cover: "https://images.unsplash.com/photo-1544989164-31dc3c645987?q=80&w=1400&auto=format&fit=crop",
+        readMins: 8,
+        views: 0
+      },
+      {
+        title: "ASCWG 2025 — Double Trouble (Mobile)",
+        date: "2025-08-25",
+        url: "https://alsaeed323.github.io/Double-Trouble-challenge/",
+        summary: "Hidden SecondActivity guarded by a random password and a \"knock\" counter; clean bypass by launching it internally with from_password=true via Frida.",
+        tags: ["Android", "Frida", "App Logic", "Intent", "ASCWG 2025"],
+        cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop",
+        readMins: 6,
+        views: 0
+      },
+      {
+        title: "ASCWG 2025 — Sadcoder (Web)",
+        date: "2025-08-25",
+        url: "https://alsaeed323.github.io/Sadcoder-/",
+        summary: "PHAR deserialization → RCE: bypassed upload blacklist using trailing dot (payload.phar.), triggered __wakeup() gadget and leaked /tmp/flag.php.",
+        tags: ["Web", "PHP", "Deserialization", "PHAR", "ASCWG 2025"],
+        cover: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1400&auto=format&fit=crop",
+        readMins: 7,
+        views: 0
+      }
+    ];
+
+    // --- Optional: fetch external JSON instead of inline posts ---
+    // fetch('posts.json').then(r => r.json()).then(data => { posts = data; render(); });
+
+    const els = {
+      grid: document.getElementById('grid'),
+      cardTpl: document.getElementById('cardTpl'),
+      tags: document.getElementById('tags'),
+      count: document.getElementById('countPosts'),
+      search: document.getElementById('search'),
+      sort: document.getElementById('sort'),
+      viewCards: document.getElementById('viewCards'),
+      viewList: document.getElementById('viewList'),
+      year: document.getElementById('year'),
+      themeBtn: document.getElementById('toggleTheme')
+    };
+
+    const state = {
+      q: '',
+      tagSet: new Set(),
+      sort: 'new',
+      view: 'cards'
+    };
+
+    const uniqueTags = [...new Set(posts.flatMap(p => p.tags))].sort((a,b)=>a.localeCompare(b));
+
+    function fmtDate(iso){
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+    }
+
+    function createTagPill(name){
+      const btn = document.createElement('button');
+      btn.className = 'tag'; btn.textContent = name; btn.dataset.tag = name;
+      btn.addEventListener('click', ()=>{
+        if(state.tagSet.has(name)) state.tagSet.delete(name); else state.tagSet.add(name);
+        refreshTagsUI();
+        render();
+      });
+      return btn;
+    }
+
+    function refreshTagsUI(){
+      [...els.tags.querySelectorAll('.tag')].forEach(el=>{
+        el.classList.toggle('active', state.tagSet.has(el.dataset.tag));
+      })
+    }
+
+    function renderTags(){
+      els.tags.innerHTML = '';
+      const all = createTagPill('All');
+      all.addEventListener('click', ()=>{ state.tagSet.clear(); refreshTagsUI(); render(); });
+      els.tags.appendChild(all);
+      uniqueTags.forEach(t => els.tags.appendChild(createTagPill(t)));
+      refreshTagsUI();
+    }
+
+    function matches(post){
+      const q = state.q.trim().toLowerCase();
+      const tagOk = state.tagSet.size === 0 || post.tags.some(t => state.tagSet.has(t));
+      if(!q) return tagOk;
+      const hay = [post.title, post.summary, ...post.tags].join(' ').toLowerCase();
+      return tagOk && hay.includes(q);
+    }
+
+    function sortPosts(list){
+      switch(state.sort){
+        case 'old': return list.sort((a,b)=> a.date.localeCompare(b.date));
+        case 'alpha': return list.sort((a,b)=> a.title.localeCompare(b.title));
+        case 'popular': return list.sort((a,b)=> (b.views||0)-(a.views||0));
+        default: // new
+          return list.sort((a,b)=> b.date.localeCompare(a.date));
+      }
+    }
+
+    function render(){
+      const filtered = sortPosts(posts.filter(matches));
+      els.grid.innerHTML = '';
+      els.count.textContent = `${filtered.length} post${filtered.length!==1?'s':''}`;
+
+      filtered.forEach(p => {
+        const node = els.cardTpl.content.cloneNode(true);
+        const art = node.querySelector('.card');
+        const linkEls = node.querySelectorAll('[data-href]');
+        const tEl = node.querySelector('[data-title]');
+        const sEl = node.querySelector('[data-summary]');
+        const dEl = node.querySelector('[data-date]');
+        const rEl = node.querySelector('[data-read]');
+        const vEl = node.querySelector('[data-views]');
+        const bEl = node.querySelector('[data-badge]');
+        const img = node.querySelector('[data-cover]');
+        const tagRow = node.querySelector('[data-inline-tags]');
+
+        linkEls.forEach(a => a.href = p.url);
+        tEl.textContent = p.title;
+        sEl.textContent = p.summary;
+        dEl.textContent = fmtDate(p.date);
+        rEl.textContent = `${p.readMins || Math.max(4, Math.round((p.summary.length + p.title.length)/250))} min`;
+        if(p.views){ vEl.classList.remove('hide'); vEl.textContent = `• ${p.views.toLocaleString()} views`; }
+        img.src = p.cover;
+        bEl.textContent = p.pinned ? 'Pinned' : (new Date(p.date) > new Date(Date.now()-1000*60*60*24*21) ? 'New' : 'Article');
+
+        p.tags.forEach(t => {
+          const chip = document.createElement('span');
+          chip.className = 'chip'; chip.textContent = t; tagRow.appendChild(chip);
+        });
+
+        if(state.view === 'list'){
+          art.style.flexDirection = 'row';
+          art.style.minHeight = 'unset';
+          art.querySelector('.cover').style.width = '28%';
+          art.querySelector('.cover').style.minHeight = '140px';
+          art.querySelector('.content').style.gap = '6px';
+        }
+
+        els.grid.appendChild(node);
+      });
+
+      // Adjust grid spans per view
+      [...els.grid.children].forEach(card => {
+        if(state.view === 'list') card.firstElementChild.style.gridColumn = 'span 12';
+        else card.firstElementChild.style.gridColumn = window.innerWidth <= 640 ? 'span 12' : (window.innerWidth <= 1100 ? 'span 6' : 'span 4');
+      });
+    }
+
+    // --- Theme ---
+    function setTheme(mode){
+      if(mode === 'light'){
+        document.documentElement.style.setProperty('--bg', '#f5f7fb');
+        document.documentElement.style.setProperty('--bg-elev', '#ffffff');
+        document.documentElement.style.setProperty('--text', '#0b1020');
+        document.documentElement.style.setProperty('--muted', '#445069');
+        document.documentElement.style.setProperty('--card', 'rgba(0,0,0,0.04)');
+        document.documentElement.style.setProperty('--card-hover', 'rgba(0,0,0,0.08)');
+      } else {
+        // dark
+        document.documentElement.style.setProperty('--bg', '#0b1020');
+        document.documentElement.style.setProperty('--bg-elev', '#11162a');
+        document.documentElement.style.setProperty('--text', '#e9edf8');
+        document.documentElement.style.setProperty('--muted', '#a7b0c4');
+        document.documentElement.style.setProperty('--card', 'rgba(255,255,255,0.06)');
+        document.documentElement.style.setProperty('--card-hover', 'rgba(255,255,255,0.12)');
+      }
+      localStorage.setItem('theme', mode);
+    }
+
+    function toggleTheme(){
+      const cur = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      setTheme(cur === 'light' ? 'dark' : 'light');
+      render();
+    }
+
+    // --- Events ---
+    els.search.addEventListener('input', (e)=>{ state.q = e.target.value; render(); });
+    els.sort.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
+    els.viewCards.addEventListener('click', ()=>{ state.view = 'cards'; render(); });
+    els.viewList.addEventListener('click', ()=>{ state.view = 'list'; render(); });
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === '/') { e.preventDefault(); els.search.focus(); }
+      if(e.key.toLowerCase() === 't') { toggleTheme(); }
+    });
+
+    els.themeBtn.addEventListener('click', toggleTheme);
+
+    document.addEventListener('click', async (e)=>{
+      const btn = e.target.closest('[data-share]');
+      if(!btn) return;
+      const card = btn.closest('.card');
+      const a = card.querySelector('[data-href]');
+      try{
+        if(navigator.share){
+          await navigator.share({ title: a.textContent.trim(), url: a.href });
+        } else {
+          await navigator.clipboard.writeText(a.href);
+          btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6l-11 11-5-5"/></svg> Copied!';
+          setTimeout(()=>btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg> Share', 1300);
+        }
+      }catch(err){ console.error(err); }
+    });
+
+    // --- Init ---
+    (function init(){
+      const pref = localStorage.getItem('theme');
+      if(pref) setTheme(pref); else if(matchMedia('(prefers-color-scheme: light)').matches) setTheme('light');
+      els.year.textContent = new Date().getFullYear();
+      renderTags();
+      render();
+    })();
+  </script>
+</body>
+</html>
