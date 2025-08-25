@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Write‑Ups Hub — Personal Blog</title>
-  <meta name="description" content="A clean, elegant hub to showcase my security write‑ups, CTF solutions, research notes, and posts." />
+  <title>Write-Ups Hub — Personal Blog</title>
+  <meta name="description" content="A clean, elegant hub to showcase my security write-ups, CTF solutions, research notes, and posts." />
   <meta name="theme-color" content="#0f172a" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,13 +12,13 @@
   <style>
     /* -------- Base + Variables -------- */
     :root{
-      --bg: #0b1020;            /* page background */
-      --bg-elev: #11162a;       /* elevated surfaces */
-      --text: #e9edf8;          /* primary text */
-      --muted: #a7b0c4;         /* muted text */
-      --brand-1: #7c3aed;       /* accent */
-      --brand-2: #06b6d4;       /* accent secondary */
-      --ring: #94a3b8;          /* focus ring */
+      --bg: #0b1020;
+      --bg-elev: #11162a;
+      --text: #e9edf8;
+      --muted: #a7b0c4;
+      --brand-1: #7c3aed;
+      --brand-2: #06b6d4;
+      --ring: #94a3b8;
       --card: rgba(255,255,255,0.06);
       --card-hover: rgba(255,255,255,0.12);
       --shadow: 0 10px 30px rgba(2,8,23,.35);
@@ -59,16 +59,11 @@
     .btn .icon{ width:18px; height:18px; opacity:.9; }
 
     .hero{ padding: 32px 24px 8px 24px; }
-    .hero-wrap{ display:grid; grid-template-columns: 1.2fr .8fr; gap:28px; align-items:center; }
-    .hero h1{ font-size: clamp(28px, 5vw, 46px); margin: 0 0 10px; line-height:1.05; }
-    .hero p{ margin: 0; color: var(--muted); font-size: clamp(14px, 2vw, 16px);
-    }
+    .hero-wrap{ display:grid; grid-template-columns: 1fr; gap:28px; align-items:center; } /* single column now */
     .hero-card{ border-radius: var(--radius-lg); padding:24px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); }
-    .stats{ display:flex; gap:18px; margin-top:16px; }
-    .chip{ padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.06); font-size: 13px; color: #d7def1; border: 1px solid rgba(255,255,255,.08); }
 
     /* -------- Controls -------- */
-    .controls{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin: 18px 0 10px; }
+    .controls{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin: 4px 0 10px; }
     .search{ flex:1; min-width: 240px; position:relative; }
     .search input{ width:100%; padding:12px 40px 12px 42px; border-radius: 12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color: var(--text); outline:none; }
     .search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:.8; }
@@ -113,7 +108,7 @@
     <div class="nav container">
       <a class="brand" href="#" aria-label="Home">
         <div class="logo" aria-hidden="true"></div>
-        <span>Write‑Ups Hub</span>
+        <span>Write-Ups Hub</span>
       </a>
       <div class="actions">
         <button id="toggleTheme" class="btn" title="Toggle theme (T)">
@@ -130,17 +125,10 @@
         </a>
       </div>
     </div>
+
+    <!-- HERO: controls only (removed the big text card) -->
     <div class="hero container">
       <div class="hero-wrap">
-        <div class="hero-card">
-          <h1>All my write‑ups, in one beautiful place.</h1>
-          <p>CTFs, web & mobile pentesting notes, research snippets, and longer posts. Search, filter by tags, and sort by date or popularity.</p>
-          <div class="stats">
-            <span class="chip" id="countPosts">0 posts</span>
-            <span class="chip">Press <span class="kbd">/</span> to search</span>
-            <span class="chip">Press <span class="kbd">T</span> for theme</span>
-          </div>
-        </div>
         <div class="hero-card">
           <div class="controls">
             <div class="search">
@@ -172,17 +160,17 @@
     <noscript><p style="color:#ffccd5">This page needs JavaScript enabled to show and filter posts.</p></noscript>
     <section id="grid" class="grid" aria-live="polite"></section>
 
-    <section id="about" class="hero-card" style="margin-bottom: 60px;">
-      <h2 style="margin-top:0">About This Blog</h2>
-      <p style="color:var(--muted)">Welcome! This is a lightweight static blog built with plain HTML/CSS/JS. It’s intentionally framework‑free so you can deploy it anywhere (GitHub Pages, Netlify, Vercel, or any static server). Add or edit posts in the <strong>posts</strong> array inside this file, or point it to a <code>posts.json</code> file later.</p>
-      <ul style="line-height:1.9; color:#d9e3ff">
-        <li><strong>Search</strong> across titles, summaries, and tags.</li>
-        <li><strong>Filters</strong> by tag(s) with multi‑select behavior.</li>
-        <li><strong>Views</strong> switch between cards and list.</li>
-        <li><strong>Theme</strong> toggle with preference stored locally.</li>
-      </ul>
-      <p style="color:var(--muted)">Tip: Replace the placeholder links with your GitHub/Notion/Medium URLs. You can also host the write‑ups as Markdown in a <code>/posts/</code> folder and link directly.</p>
-    </section>
+   <section id="about" class="hero-card" style="margin-bottom: 60px;">
+  <h2 style="margin-top:0">About Me</h2>
+  <p style="color:var(--muted)">
+ Cybersecurity Engineer with a solid foundation in web and mobile application security, built through 
+    self-study and hands-on practice at <strong>PortSwigger Web Security Academy</strong> and 
+    <strong>Hextree Android Application Penetration Testing</strong>. Proficient in tools like 
+    <strong>Burp Suite</strong> and equipped with both academic and practical experience to support 
+    application security efforts. Currently expanding into <strong>Network</strong> and 
+    <strong>Active Directory penetration testing</strong>, bringing deep technical knowledge.
+  </p>
+</section>
   </main>
 
   <footer>
@@ -210,14 +198,14 @@
       </a>
       <div class="content">
         <a class="title" data-href target="_blank" rel="noopener" data-title>Post title</a>
-        <div class="meta"><span data-date>2025‑08‑20</span><span>•</span><span data-read>5 min</span><span class="hide" data-views>• 0 views</span></div>
+        <div class="meta"><span data-date>2025-08-20</span><span>•</span><span data-read>5 min</span><span class="hide" data-views>• 0 views</span></div>
         <p class="summary" data-summary>Summary goes here.</p>
         <div class="inline-tags" data-inline-tags></div>
       </div>
       <div class="footer">
         <a class="btn" data-href target="_blank" rel="noopener">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-          Read write‑up
+          Read write-up
         </a>
         <button class="btn" data-share>
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>
@@ -228,17 +216,7 @@
   </template>
 
   <script>
-    /* ==========================================================
-       HOW TO ADD YOUR POSTS
-       ----------------------------------------------------------
-       1) Duplicate an object in the posts array below.
-       2) Fill in: title, date (YYYY-MM-DD), url, summary, tags, cover.
-       3) Optional: readMins, views, pinned.
-       4) Save & deploy!
-       
-       TIP: You can move this array to /posts.json and fetch it instead.
-       ========================================================== */
-
+    /* Posts (unchanged in your snippet) */
     const posts = [
       {
         title: "Android Pentesting Challenges on Allsafe (Mobile)",
@@ -255,7 +233,7 @@
         title: "ASCWG 2025 — Unlock the Myth (Mobile)",
         date: "2025-08-25",
         url: "https://alsaeed323.github.io/Myth-challenge/",
-        summary: "Bypass anti-tooling and a native time+location gate in libvault.so; defang exit paths, spoof GPS/time at Java layer, then capture the XOR‑built flag from getFlag().",
+        summary: "Bypass anti-tooling and a native time+location gate in libvault.so; defang exit paths, spoof GPS/time at Java layer, then capture the XOR-built flag from getFlag().",
         tags: ["Android", "Reverse", "Frida", "Native", "ASCWG 2025"],
         cover: "https://images.unsplash.com/photo-1544989164-31dc3c645987?q=80&w=1400&auto=format&fit=crop",
         readMins: 8,
@@ -283,14 +261,11 @@
       }
     ];
 
-    // --- Optional: fetch external JSON instead of inline posts ---
-    // fetch('posts.json').then(r => r.json()).then(data => { posts = data; render(); });
-
     const els = {
       grid: document.getElementById('grid'),
       cardTpl: document.getElementById('cardTpl'),
       tags: document.getElementById('tags'),
-      count: document.getElementById('countPosts'),
+      count: document.getElementById('countPosts'), // may be null now
       search: document.getElementById('search'),
       sort: document.getElementById('sort'),
       viewCards: document.getElementById('viewCards'),
@@ -299,13 +274,7 @@
       themeBtn: document.getElementById('toggleTheme')
     };
 
-    const state = {
-      q: '',
-      tagSet: new Set(),
-      sort: 'new',
-      view: 'cards'
-    };
-
+    const state = { q:'', tagSet:new Set(), sort:'new', view:'cards' };
     const uniqueTags = [...new Set(posts.flatMap(p => p.tags))].sort((a,b)=>a.localeCompare(b));
 
     function fmtDate(iso){
@@ -318,8 +287,7 @@
       btn.className = 'tag'; btn.textContent = name; btn.dataset.tag = name;
       btn.addEventListener('click', ()=>{
         if(state.tagSet.has(name)) state.tagSet.delete(name); else state.tagSet.add(name);
-        refreshTagsUI();
-        render();
+        refreshTagsUI(); render();
       });
       return btn;
     }
@@ -327,7 +295,7 @@
     function refreshTagsUI(){
       [...els.tags.querySelectorAll('.tag')].forEach(el=>{
         el.classList.toggle('active', state.tagSet.has(el.dataset.tag));
-      })
+      });
     }
 
     function renderTags(){
@@ -352,15 +320,14 @@
         case 'old': return list.sort((a,b)=> a.date.localeCompare(b.date));
         case 'alpha': return list.sort((a,b)=> a.title.localeCompare(b.title));
         case 'popular': return list.sort((a,b)=> (b.views||0)-(a.views||0));
-        default: // new
-          return list.sort((a,b)=> b.date.localeCompare(a.date));
+        default: return list.sort((a,b)=> b.date.localeCompare(a.date));
       }
     }
 
     function render(){
       const filtered = sortPosts(posts.filter(matches));
       els.grid.innerHTML = '';
-      els.count.textContent = `${filtered.length} post${filtered.length!==1?'s':''}`;
+      if(els.count) els.count.textContent = `${filtered.length} post${filtered.length!==1?'s':''}`;
 
       filtered.forEach(p => {
         const node = els.cardTpl.content.cloneNode(true);
@@ -400,7 +367,6 @@
         els.grid.appendChild(node);
       });
 
-      // Adjust grid spans per view
       [...els.grid.children].forEach(card => {
         if(state.view === 'list') card.firstElementChild.style.gridColumn = 'span 12';
         else card.firstElementChild.style.gridColumn = window.innerWidth <= 640 ? 'span 12' : (window.innerWidth <= 1100 ? 'span 6' : 'span 4');
@@ -417,7 +383,6 @@
         document.documentElement.style.setProperty('--card', 'rgba(0,0,0,0.04)');
         document.documentElement.style.setProperty('--card-hover', 'rgba(0,0,0,0.08)');
       } else {
-        // dark
         document.documentElement.style.setProperty('--bg', '#0b1020');
         document.documentElement.style.setProperty('--bg-elev', '#11162a');
         document.documentElement.style.setProperty('--text', '#e9edf8');
@@ -427,7 +392,6 @@
       }
       localStorage.setItem('theme', mode);
     }
-
     function toggleTheme(){
       const cur = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
       setTheme(cur === 'light' ? 'dark' : 'light');
@@ -435,17 +399,17 @@
     }
 
     // --- Events ---
-    els.search.addEventListener('input', (e)=>{ state.q = e.target.value; render(); });
-    els.sort.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
-    els.viewCards.addEventListener('click', ()=>{ state.view = 'cards'; render(); });
-    els.viewList.addEventListener('click', ()=>{ state.view = 'list'; render(); });
+    document.getElementById('search').addEventListener('input', (e)=>{ state.q = e.target.value; render(); });
+    document.getElementById('sort').addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
+    document.getElementById('viewCards').addEventListener('click', ()=>{ state.view = 'cards'; render(); });
+    document.getElementById('viewList').addEventListener('click', ()=>{ state.view = 'list'; render(); });
 
     document.addEventListener('keydown', (e)=>{
-      if(e.key === '/') { e.preventDefault(); els.search.focus(); }
+      if(e.key === '/') { e.preventDefault(); document.getElementById('search').focus(); }
       if(e.key.toLowerCase() === 't') { toggleTheme(); }
     });
 
-    els.themeBtn.addEventListener('click', toggleTheme);
+    document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
 
     document.addEventListener('click', async (e)=>{
       const btn = e.target.closest('[data-share]');
@@ -467,7 +431,7 @@
     (function init(){
       const pref = localStorage.getItem('theme');
       if(pref) setTheme(pref); else if(matchMedia('(prefers-color-scheme: light)').matches) setTheme('light');
-      els.year.textContent = new Date().getFullYear();
+      document.getElementById('year').textContent = new Date().getFullYear();
       renderTags();
       render();
     })();
